@@ -4,6 +4,9 @@ library("ggraph")
 library("igraph")
 library("ggrepel")
 
+## Data was downloaded from KAGGLE:
+## https://www.kaggle.com/stackoverflow/stack-overflow-tag-network
+
 ### Network analysis of stack overflow network tags #######
 node_data <- read_csv("stack_network_nodes.csv")
 edge_data <- read_csv("stack_network_links.csv")
@@ -33,7 +36,7 @@ pdf("Indegree_distribution.pdf")
 hist(degree(net, mode = "in"), col="dark red", xlab = "In-degree", main = "In-degree distribution")
 dev.off()
 ######## Plot a network, highlighting the nodes with high in-degree #######
-pdf("Colour_code_nodes_indegree_gt_191.pdf")
+pdf("Colour_code_nodes_indegree_gt_19.pdf")
 net %>% 
   mutate(centrality = centrality_degree()) %>% mutate(cent_imp= centrality > 19) %>%
   ggraph(layout = 'kk') + 
@@ -63,7 +66,7 @@ top_20_centrality[[1:20]]
 data <- read.csv("stack_network_links.csv", header = T)
 y <- data.frame(data$source, data$target)
 net <- graph.data.frame(y, directed = F)
-pdf("stack_overflow_community_detection_raa.pdf")
+pdf("stack_overflow_community_detection.pdf")
 par(mfrow=c(1,1))
 cnet <- cluster_edge_betweenness(net)
 plot(cnet, 
